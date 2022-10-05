@@ -3,6 +3,7 @@ package com.example.product.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,9 @@ import com.example.product.service.ProductService;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+	
+	@Value("${app.owner}")
+	private String owner;
 	
 	@Autowired
 	private ProductService service;
@@ -40,12 +44,16 @@ public class ProductController {
 	}
 	
 	@GetMapping("change-inventory/{id}")
-	public Product changeInventory(@PathVariable int id, @RequestParam int count) {
+	public String changeInventory(@PathVariable int id, @RequestParam int count) {
 		return service.changeInventoryCount(id, count);
 		
 	}
 	
-	
+	@GetMapping("/owner")
+	public String getOwner() {
+		return owner;
+		
+	}
 	
 	
 

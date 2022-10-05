@@ -16,6 +16,9 @@ spring:
       enabled: true      
   application:
     name: spring-product-service
+  config:
+    import: optional:configserver:http://localhost:8888 
+  
    
 server:
  port: 8081
@@ -28,3 +31,12 @@ eureka:
       enabled: true
   instance:
     prefer-ip-address: true
+    
+app:
+ owner: product
+ 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

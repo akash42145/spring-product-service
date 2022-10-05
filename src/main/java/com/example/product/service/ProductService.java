@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.product.exception.ProductNotFoundException;
 import com.example.product.model.Product;
 import com.example.product.repository.ProductRepository;
 
@@ -21,16 +22,16 @@ public class ProductService {
 
 	public Product getProduct(int id) {
 
-		return repository.findById(id).orElseThrow(() -> new RuntimeException());
+		return repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product is not found for id: "+ id));
 	}
 
-	public Product changeInventoryCount(int id, int count) {
+	public String changeInventoryCount(int id, int count) {
 
-		Product p = repository.findById(id).orElseThrow(() -> new RuntimeException());
+		Product p = repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product is not found for id: "+ id));
 
-		repository.changeInventoryCount(id, p.getAvailableStocks() + count);
+		 repository.changeInventoryCount(id, p.getAvailableStocks() + count);
 
-		return repository.findById(id).orElseThrow(() -> new RuntimeException());
+		return "Inventory has updated for "+ p.getName();
 	}
 
 	public List<Product> getAllProduct() {
