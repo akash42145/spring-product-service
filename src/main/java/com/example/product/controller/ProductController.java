@@ -43,7 +43,7 @@ public class ProductController {
 		
 	}
 	
-	@GetMapping("change-inventory/{id}")
+	@GetMapping("/change-inventory/{id}")
 	public String changeInventory(@PathVariable int id, @RequestParam int count) {
 		return service.changeInventoryCount(id, count);
 		
